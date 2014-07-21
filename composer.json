@@ -19,7 +19,11 @@
     },
     "require": {
         "php": ">=5.2.8",
-        "ext-mcrypt": "*"
+        "ext-mcrypt": "*",
+        "stripe/stripe-php": "1.*",
+        "asugai/cake-php-environment-manager": "dev-master",
+        "asugai/cake-php-notification-manager": "dev-master",
+        "asugai/cake-php-payment-manager": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",

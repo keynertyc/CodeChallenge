@@ -35,6 +35,11 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+	<!-- The required Stripe lib -->
+	<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+	<!-- jQuery is used only for this example; it isn't required to use Stripe -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
 	<div id="container">

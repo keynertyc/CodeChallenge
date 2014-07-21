@@ -18,7 +18,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('AppController', 'Controller');
+App::uses('AppController', 'Controller', 'SimplePasswordHasher', 'Controller/Component/Auth');
 
 /**
  * Static content controller
@@ -35,7 +35,7 @@ class PagesController extends AppController {
  *
  * @var array
  */
-	public $uses = array();
+	public $uses = array('User','Creditcard','Notification');
 
 /**
  * Displays a view
@@ -73,5 +73,21 @@ class PagesController extends AppController {
 			}
 			throw new NotFoundException();
 		}
+	}
+
+	public function register() {
+		if ($this->request->is('post')) {
+            $this->User->create();
+            if ($this->User->save($this->request->data['User'])) {
+            	$this->Creditcard->create();
+            	$this->request->data['Creditcard']['user_id'] = $this->User->getLastInsertId();
+            	if ($this->Creditcard->save($this->request->data['Creditcard'])) {
+            		$this->Session->setFlash(__('Saved.'));
+                	return $this->redirect(array('action' => 'register'));
+            	}
+            }
+            $this->Session->setFlash(__('Error.'));
+        }
+		$this->set('Stripe', Configure::read('Stripe.keys'));
 	}
 }
