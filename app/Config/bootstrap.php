@@ -105,3 +105,54 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+/**
+ * New
+ */
+
+// Load composer autoload.
+require APP . '/Vendor/autoload.php';
+
+// Remove and re-prepend CakePHP's autoloader as composer thinks it is the most important.
+// See https://github.com/composer/composer/commit/c80cb76b9b5082ecc3e5b53b1050f76bb27b127b
+spl_autoload_unregister(array('App', 'load'));
+spl_autoload_register(array('App', 'load'), true, true);
+
+CakePlugin::loadAll();
+
+Configure::write('EnvironmentUtility.environments', array(
+	'local' => array(
+        'urls' => array(
+            'example' => 'codechallenge.example.com'
+        ),
+        'paths' => array(
+            'example' => '/Applications/MAMP/htdocs/keyner/CodeChallenge/app/'
+        )
+    )
+));
+
+if (!Configure::check('UrbanAirship')) {
+    Configure::write('UrbanAirship.key', '');
+    Configure::write('UrbanAirship.master', '');
+}
+
+if (!Configure::check('Twilio')) {
+    Configure::write('Twilio.sid', '');
+    Configure::write('Twilio.token', '');
+    Configure::write('Twilio.number', '');
+}
+
+Configure::write('Stripe.test.secret', 'sk_test_4RcruWIMwYMrlojNOt9wEEkS');
+Configure::write('Stripe.test.public', 'pk_test_4RcruTkalXMD6Xkj2MKZtR60');
+
+Configure::write('Stripe.live.secret', 'sk_live_4RcrPZPiQifwLHonX8IQe2KE');
+Configure::write('Stripe.live.public', 'pk_live_4Rcra6ERQ7WD7a39tabHnpsl');
+
+if (class_exists('EnvironmentUtility') && EnvironmentUtility::is('production')) {
+    Configure::write('Stripe.keys', Configure::read('Stripe.live'));
+} else {
+    Configure::write('Stripe.keys', Configure::read('Stripe.test'));
+}
+
+
+
