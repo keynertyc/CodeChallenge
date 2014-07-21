@@ -65,11 +65,12 @@ class DATABASE_CONFIG {
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
-		'database' => 'database_name',
+		'login' => 'root',
+		'password' => 'root',
+		'database' => 'dbcodechallenge',
 		'prefix' => '',
 		//'encoding' => 'utf8',
+		//'unix_socket' => '/Applications/MAMP/tmp/mysql/mysql.sock'
 	);
 
 	public $test = array(
